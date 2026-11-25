@@ -6,9 +6,11 @@ import type { LucideIcon } from "lucide-react"
 import {
   Bike,
   Boxes,
+  ChartColumn,
   ClipboardList,
   Heart,
   Home,
+  LayoutDashboard,
   PackageOpen,
   PlusCircle,
   ShieldCheck,
@@ -47,6 +49,11 @@ const roleMeta: Record<UserRole, { label: string; icon: LucideIcon }> = {
 const sidebarItems: Record<UserRole, SidebarItem[]> = {
   customer: [
     {
+      title: "Overview",
+      href: "/dashboard/customer/overview",
+      icon: LayoutDashboard,
+    },
+    {
       title: "My Rentals",
       href: "/dashboard/customer/my-rentals",
       icon: PackageOpen,
@@ -64,6 +71,11 @@ const sidebarItems: Record<UserRole, SidebarItem[]> = {
   ],
   owner: [
     {
+      title: "Overview",
+      href: "/dashboard/owner/overview",
+      icon: LayoutDashboard,
+    },
+    {
       title: "Add Equipment",
       href: "/dashboard/owner/add-equipment",
       icon: PlusCircle,
@@ -74,9 +86,14 @@ const sidebarItems: Record<UserRole, SidebarItem[]> = {
       icon: Boxes,
     },
     {
-      title: "My Equipment Rental",
+      title: "My Equipment Rentals",
       href: "/dashboard/owner/my-equipment-rental",
       icon: ClipboardList,
+    },
+    {
+      title: "Analytics",
+      href: "/dashboard/owner/analytics",
+      icon: ChartColumn,
     },
     {
       title: "My Profile",
@@ -85,6 +102,11 @@ const sidebarItems: Record<UserRole, SidebarItem[]> = {
     },
   ],
   admin: [
+    {
+      title: "Overview",
+      href: "/dashboard/admin/overview",
+      icon: LayoutDashboard,
+    },
     {
       title: "All Users",
       href: "/dashboard/admin/all-users",
@@ -99,6 +121,11 @@ const sidebarItems: Record<UserRole, SidebarItem[]> = {
       title: "All Rentals",
       href: "/dashboard/admin/all-rentals",
       icon: ClipboardList,
+    },
+    {
+      title: "Analytics",
+      href: "/dashboard/admin/analytics",
+      icon: ChartColumn,
     },
     {
       title: "My Profile",

@@ -47,7 +47,7 @@ export default function SignUpPage() {
         email,
         password,
         image: image || undefined,
-        callbackURL: "/dashboard",
+        callbackURL: "/",
       });
 
       if (error) {
