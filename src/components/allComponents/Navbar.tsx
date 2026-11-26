@@ -2,8 +2,8 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
 
 import {
   LayoutDashboard,
@@ -91,7 +91,26 @@ function UserAvatar({
 }
 
 // Main Navbar Component
+//
+// `usePathname` suspends on dynamic routes that are not prerendered (for
+// example /equipment/[id] with Cache Components). Keeping the hook in a child
+// component lets the root layout stream the navbar instead of blocking the
+// route; the fallback is the solid variant, which is what non-home pages use.
+function NavbarWithPathname() {
+  const pathname = usePathname();
+
+  return <NavbarFrame isHomePage={pathname === "/"} />;
+}
+
 export default function Navbar() {
+  return (
+    <Suspense fallback={<NavbarFrame isHomePage={false} />}>
+      <NavbarWithPathname />
+    </Suspense>
+  );
+}
+
+function NavbarFrame({ isHomePage }: { isHomePage: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
 
@@ -133,7 +152,13 @@ export default function Navbar() {
   };
 
   return (
-    <header className="absolute top-0 left-0 z-50 w-full border-b border-white/15 bg-black/40 backdrop-blur-sm">
+    <header
+      className={`top-0 left-0 z-50 w-full border-b ${
+        isHomePage
+          ? "absolute border-white/15 bg-black/40 backdrop-blur-sm"
+          : "sticky border-white/10 bg-[#0b0f1c] shadow-lg"
+      }`}
+    >
 
       <nav className="mx-auto flex h-20 max-w-[1600px] items-center justify-between px-5 md:px-10 lg:px-16">
 

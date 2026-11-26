@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,
-    devIndicators: false,
+    // devIndicators: false,
   experimental: {
     serverActions: {
       // Equipment images are sent to a Server Action before being forwarded to ImgBB.
