@@ -152,11 +152,12 @@ export async function EquipmentDetail({ params }: EquipmentDetailProps) {
             <div className="my-6 border-t border-zinc-100" />
 
          
-         <RentalForm
+ <RentalForm
+  equipmentId={equipment._id.toString()}
   equipmentName={equipment.name}
   price={equipment.price}
   rentalType={equipment.rentalType}
-  availableQuantity={equipment.availableQuantity ?? 0}
+  availableQuantity={available ? (equipment.availableQuantity ?? 0) : 0}
 />
 
             {/* Equipment owner */}

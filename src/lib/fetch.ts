@@ -408,3 +408,42 @@ export async function getEquipmentById(id: string): Promise<Equipment | null> {
     isAvailable: equipment.isAvailable !== false,
   }
 }
+
+/** Units free for one equipment item on a specific date range. */
+export type EquipmentAvailability = {
+  equipmentId: string
+  totalQuantity: number
+  reservedQuantity: number
+  availableQuantity: number
+  startDate: string
+  endDate: string
+}
+
+/**
+ * GET /all-equipments/:id/availability
+ * Availability is based on overlapping paid rentals for the chosen dates, not
+ * on who the customer is, so repeat rentals are allowed when stock is free.
+ */
+export async function getEquipmentAvailability(
+  id: string,
+  startDate: string,
+  endDate: string,
+  signal?: AbortSignal
+): Promise<EquipmentAvailability> {
+  const params = new URLSearchParams({ startDate, endDate })
+
+  const response = await fetch(
+    `${API_BASE_URL}/all-equipments/${encodeURIComponent(id)}/availability?${params.toString()}`,
+    { cache: "no-store", signal }
+  )
+
+  if (!response.ok) {
+    const data = (await response.json().catch(() => null)) as
+      | { message?: string }
+      | null
+
+    throw new Error(data?.message ?? "Failed to check availability.")
+  }
+
+  return (await response.json()) as EquipmentAvailability
+}
